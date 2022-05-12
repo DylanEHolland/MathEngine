@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { KeyboardEvent } from "react";
-import { parse } from "../lib/sheetlang/parser";
+import { parseText } from "../lib/parser";
 import "../styles/input_box.scss";
 
 export const InputBox = () => {
@@ -37,6 +36,6 @@ export const InputBox = () => {
                     setFocused(true);
                 }
             }
-        >{parse(value)}</div>
+        >{parseText(value)}</div>
     )
 }
