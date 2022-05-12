@@ -1,0 +1,11 @@
+.input__box {
+    padding: 6px 12px;
+    font-size: 16px;
+    border: 1px solid #111;
+    width: 175px;
+}
+
+.input__box--unfocused {
+    cursor: pointer;
+    min-height: 16px;
+}
