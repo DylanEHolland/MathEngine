@@ -6,7 +6,7 @@ export const InputBox = () => {
     const [value, setValue] = useState<string>("");
     const [focused, setFocused] = useState<boolean>(false);
 
-    return focused ? (
+    return (
         <input 
             type="text"
             className={`input__box ${focused ? "focused" : ""}`}
@@ -28,14 +28,15 @@ export const InputBox = () => {
                 }
             }
         />
-    ) : (
-        <div
-            className={`input__box input__box--unfocused`}
-            onClick={
-                (event: any) => {
-                    setFocused(true);
-                }
-            }
-        >{parseText(value)}</div>
-    )
+    );
+    // ) : (
+    //     <div
+    //         className={`input__box input__box--unfocused`}
+    //         onClick={
+    //             (event: any) => {
+    //                 setFocused(true);
+    //             }
+    //         }
+    //     >{parseText(value)}</div>
+    // )
 }
