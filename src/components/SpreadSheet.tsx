@@ -90,6 +90,8 @@ const SpreadSheetRow = ({data, id}: {data: any, id: number}) => {
 
 const SpreadSheetColumn = ({}: {}) => {
     return (
-        <InputBox />
+        <InputBox 
+            dynamic={true}
+        />
     )
 }
