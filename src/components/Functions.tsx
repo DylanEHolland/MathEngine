@@ -3,23 +3,34 @@ import "../styles/functions.scss";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { parseAction, parseParameters } from "../lib/parser";
+import { FunctionInfo } from "./FunctionInfo";
 
 export const Functions = () => {
     const [functions, setFunctions] = useState<any>({});
     const [editing, setEditing] = useState<string|null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
     
     const addFunction = (x: any, dropOldName?: string) => {
-        let replaceFunctions = {...functions};
-        replaceFunctions[x.name] = {
-            'parameters': x.parameters,
-            'action': x.action
-        };
+        if(x && x.name && x.action) {
+            setLoading(true);
+            let replaceFunctions = {...functions};
+            replaceFunctions[x.name] = {
+                'parameters': x.parameters,
+                'action': x.action
+            };
 
-        if(dropOldName) {
-            delete replaceFunctions[dropOldName];
+            if(dropOldName) {
+                delete replaceFunctions[dropOldName];
+            }
+
+            setFunctions(replaceFunctions);
         }
+    }
 
-        setFunctions(replaceFunctions);
+    const deleteFunction = (name: string) => {
+        let replaceFunctions = {...functions}
+        delete replaceFunctions[name];
+        setFunctions(replaceFunctions)
     }
 
     useEffect(() => {
@@ -33,11 +44,12 @@ export const Functions = () => {
         const cookies = new Cookies();
         if(Object.keys(functions).length > 0)
             cookies.set("functions", JSON.stringify(functions));
+            setLoading(false);
 
         setEditing(null)
     }, [functions])
 
-    return (
+    return loading ? <>...</> : (
         <table className="functions__table">
             <thead>
                 <tr>
@@ -51,18 +63,18 @@ export const Functions = () => {
                 {
                     functions && Object.keys(functions).length > 0 && Object.keys(functions).map(
                         key => {
-                            return <Function addFunction={addFunction} name={key} data={functions[key]} editing={editing === key} setEditing={setEditing} />
+                            return <Function addFunction={addFunction} deleteFunction={deleteFunction} name={key} data={functions[key]} editing={editing === key} setEditing={setEditing} />
                         }
                     )
                 }
 
-                {editing === null && <Function addFunction={addFunction} isNew />}
+                {editing === null && <Function addFunction={addFunction} deleteFunction={deleteFunction} isNew />}
             </tbody>
         </table>
     );
 }
 
-export const Function = ({addFunction, editing, setEditing, name, data, isNew = false}: {addFunction?: any; editing?: boolean; setEditing?: any; name?: any; data?: any; isNew?: boolean;}) => {
+export const Function = ({addFunction, deleteFunction, editing, setEditing, name, data, isNew = false}: {addFunction?: any; deleteFunction?: any; editing?: boolean; setEditing?: any; name?: any; data?: any; isNew?: boolean;}) => {
     const [fnName, setFnName] = useState<any>(name);
     const [parameters, setParameters] = useState<any>((data && data.parameters) || "");
     const [action, setAction] = useState<any>((data && data.action) || "");
@@ -113,37 +125,23 @@ export const Function = ({addFunction, editing, setEditing, name, data, isNew = 
                 editing && (
                     <tr>
                         <td colSpan={4}>
-                            <FunctionInfo 
+                            <FunctionInfo
                                 name={fnName}
                                 parameters={parameters}
                                 action={action}
                             />
-                            <button onClick={
-                                () => setEditing(null)
-                            }>Exit</button>
+                            <div>
+                                <button onClick={
+                                    () => deleteFunction(name)
+                                }>Delete</button>
+                                <button onClick={
+                                    () => setEditing(null)
+                                }>Exit</button>
+                            </div>
                         </td>
                     </tr>
                 )
             }
         </>
-    )
-}
-
-export const FunctionInfo = ({name, parameters, action}: {name: string, parameters: string, action: string}) => {
-    return (
-        <div className="function__info">
-            <b>Parameters:</b>
-            <div>
-                <code>
-                    {JSON.stringify(parseParameters(parameters))}
-                </code>
-            </div>
-            <b>Action:</b>
-            <div>
-                <code>
-                    {JSON.stringify(parseAction(action))}
-                </code>
-            </div>
-        </div>
     )
 }
