@@ -15,17 +15,15 @@ export const Functions = () => {
             'action': x.action
         };
 
-        // if(dropOldName) {
-        //     delete replaceFunctions[dropOldName];
-        // }
+        if(dropOldName) {
+            delete replaceFunctions[dropOldName];
+        }
 
         setFunctions(replaceFunctions);
-        setEditing(null);
     }
 
     useEffect(() => {
         const cookies = new Cookies();
-        console.log("Loading functions...", cookies.get("functions"))
         if(cookies.get("functions")) {
             setFunctions(cookies.get("functions"));
         }
@@ -35,6 +33,8 @@ export const Functions = () => {
         const cookies = new Cookies();
         if(Object.keys(functions).length > 0)
             cookies.set("functions", JSON.stringify(functions));
+
+        setEditing(null)
     }, [functions])
 
     return (
@@ -67,6 +67,10 @@ export const Function = ({addFunction, editing, setEditing, name, data, isNew = 
     const [parameters, setParameters] = useState<any>((data && data.parameters) || "");
     const [action, setAction] = useState<any>((data && data.action) || "");
 
+    useEffect(() => {
+        console.log("Function:", editing)
+    })
+
     if(!isNew && !data) return null;
 
     return (
@@ -91,7 +95,7 @@ export const Function = ({addFunction, editing, setEditing, name, data, isNew = 
                                         name: fnName,
                                         parameters: parameters,
                                         action: action
-                                    }, name)
+                                    }, (fnName !== name) && name)
                                 }
                             }>{isNew ? "Add" : "Update"}</button></td>
                         </>

@@ -1,5 +1,5 @@
 const specialChars = [
-    '+', '-', '*', '/'
+    '+', '-', '*', '/', '(', ')'
 ]
 
 const arithFunctions = {
@@ -84,7 +84,7 @@ export const parseParameters = (str: string) => {
 
 export const parseAction = (str: string) => {
     let tokens = str.split('');
-    tokens = parseExpr(tokens)
+    tokens = purgeExpr(parseExpr(tokens))
 
     return tokens
 }
@@ -92,6 +92,8 @@ export const parseAction = (str: string) => {
 export const parseExpr = (tokens: any) => {
     let nodes: any = [];
     let index = 0;
+    let potentialStr = '';
+
     for(; index < tokens.length; index++) {
         const character = tokens[index];
 
@@ -103,9 +105,41 @@ export const parseExpr = (tokens: any) => {
         } else if(character === ")") {
             return nodes;
         } else {
-            nodes.push(character)
+            if(specialChars.includes(character)) {
+                nodes.push({
+                    type: "SPECIAL",
+                    value: character
+                })
+            } else {
+                if(character !== " ")
+                    potentialStr += character;
+                
+                if( tokens[index + 1] && (tokens[index + 1] === " " || specialChars.includes(tokens[index + 1])) ) {
+                    nodes.push({
+                        type: isNaN(parseFloat(potentialStr)) ? "VARIABLE" : "CONSTANT",
+                        value: potentialStr
+                    })
+
+                    potentialStr = '';
+                }
+            }
         }
     }
 
     return nodes;
+}
+
+export const purgeExpr = (exp: any) => {
+    let nodes: any = [];
+    for(let i = 0; i < exp.length; i++) {
+        if(exp[i].constructor === Array) {
+            nodes.push([purgeExpr(exp[i])])
+        } else {
+            if(exp[i].value !== "") {
+                nodes.push(exp[i])
+            }
+        }
+    }
+
+    return nodes
 }

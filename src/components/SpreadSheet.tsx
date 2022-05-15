@@ -62,19 +62,22 @@ const SpreadSheetTable = ({table}: {table: any}) => {
     const tableKeys = Object.keys(table);
 
     return (
-        <>
-            {table[tableKeys[0]].map(
-                (e: any, idx: number) => {
-                    return <SpreadSheetRow data={table} id={idx} />
-                }
-            )}
-        </>
+        <table>
+            <thead></thead>
+            <tbody>
+                {table[tableKeys[0]].map(
+                    (e: any, idx: number) => {
+                        return <SpreadSheetRow data={table} id={idx} />
+                    }
+                )}
+            </tbody>
+        </table>
     );
 }
 
 const SpreadSheetRow = ({data, id}: {data: any, id: number}) => {
     return (
-        <div className="spread__sheet--row">
+        <tr className="spread__sheet--row">
             {Object.keys(data).map(
                 (e: any, idx: any) => {
                     return (
@@ -84,14 +87,16 @@ const SpreadSheetRow = ({data, id}: {data: any, id: number}) => {
                     )
                 }
             )}
-        </div>
+        </tr>
     )
 }
 
 const SpreadSheetColumn = ({}: {}) => {
     return (
-        <InputBox 
-            dynamic={true}
-        />
+        <td>
+            <InputBox 
+                dynamic={true}
+            />
+        </td>
     )
 }
