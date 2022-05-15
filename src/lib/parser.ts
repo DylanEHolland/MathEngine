@@ -77,3 +77,35 @@ export const runNode = (node: any) => {
 
     return result
 }
+
+export const parseParameters = (str: string) => {
+    return str.split(",")
+}
+
+export const parseAction = (str: string) => {
+    let tokens = str.split('');
+    tokens = parseExpr(tokens)
+
+    return tokens
+}
+
+export const parseExpr = (tokens: any) => {
+    let nodes: any = [];
+    let index = 0;
+    for(; index < tokens.length; index++) {
+        const character = tokens[index];
+
+        if(character === "(") {
+            let newNode = parseExpr(tokens.slice(index + 1));
+            nodes.push(newNode);
+
+            index += newNode.length + 1;
+        } else if(character === ")") {
+            return nodes;
+        } else {
+            nodes.push(character)
+        }
+    }
+
+    return nodes;
+}

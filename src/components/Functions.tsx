@@ -2,6 +2,7 @@ import { InputBox } from "./InputBox";
 import "../styles/functions.scss";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
+import { parseAction, parseParameters } from "../lib/parser";
 
 export const Functions = () => {
     const [functions, setFunctions] = useState<any>({});
@@ -14,9 +15,9 @@ export const Functions = () => {
             'action': x.action
         };
 
-        if(dropOldName) {
-            delete replaceFunctions[dropOldName];
-        }
+        // if(dropOldName) {
+        //     delete replaceFunctions[dropOldName];
+        // }
 
         setFunctions(replaceFunctions);
         setEditing(null);
@@ -66,35 +67,79 @@ export const Function = ({addFunction, editing, setEditing, name, data, isNew = 
     const [parameters, setParameters] = useState<any>((data && data.parameters) || "");
     const [action, setAction] = useState<any>((data && data.action) || "");
 
-    if( (!editing || !isNew) && !data ) return null;
+    if(!isNew && !data) return null;
 
     return (
-        <tr>
+        <>
+            <tr 
+                className={`${!isNew ? 'function__row' : ''}`}
+                onClick={() => {
+                    if(!isNew) {
+                        setEditing(name)
+                    }
+                }}
+            >
+                {
+                    (editing || isNew) ? (
+                        <>
+                            <td><InputBox initialValue={name} placeholder="f" onUpdate={setFnName} /></td>
+                            <td><InputBox initialValue={parameters} placeholder="x, y" onUpdate={setParameters} /></td>
+                            <td><InputBox initialValue={action} placeholder="x + y" onUpdate={setAction} /></td>
+                            <td><button onClick={
+                                () => {
+                                    addFunction({
+                                        name: fnName,
+                                        parameters: parameters,
+                                        action: action
+                                    }, name)
+                                }
+                            }>{isNew ? "Add" : "Update"}</button></td>
+                        </>
+                    ) : name && (
+                        <>
+                            <td>{name}</td>
+                            <td>{data.parameters}</td>
+                            <td>{data.action}</td>
+                            <td></td>
+                        </>
+                    )
+                }
+            </tr>
             {
-                (editing || isNew) ? (
-                    <>
-                        <td><InputBox initialValue={name} placeholder="f" onUpdate={setFnName} /></td>
-                        <td><InputBox initialValue={parameters} placeholder="x, y" onUpdate={setParameters} /></td>
-                        <td><InputBox initialValue={action} placeholder="x + y" onUpdate={setAction} /></td>
-                        <td><button onClick={
-                            () => {
-                                addFunction({
-                                    name: fnName,
-                                    parameters: parameters,
-                                    action: action
-                                }, name)
-                            }
-                        }>{isNew ? "Add" : "Update"}</button></td>
-                    </>
-                ) : name && (
-                    <>
-                        <td>{name}</td>
-                        <td>{data.parameters}</td>
-                        <td>{data.action}</td>
-                        <td><button onClick={() => setEditing(name)}>Edit</button></td>
-                    </>
+                editing && (
+                    <tr>
+                        <td colSpan={4}>
+                            <FunctionInfo 
+                                name={fnName}
+                                parameters={parameters}
+                                action={action}
+                            />
+                            <button onClick={
+                                () => setEditing(null)
+                            }>Exit</button>
+                        </td>
+                    </tr>
                 )
             }
-        </tr>
+        </>
+    )
+}
+
+export const FunctionInfo = ({name, parameters, action}: {name: string, parameters: string, action: string}) => {
+    return (
+        <div className="function__info">
+            <b>Parameters:</b>
+            <div>
+                <code>
+                    {JSON.stringify(parseParameters(parameters))}
+                </code>
+            </div>
+            <b>Action:</b>
+            <div>
+                <code>
+                    {JSON.stringify(parseAction(action))}
+                </code>
+            </div>
+        </div>
     )
 }

@@ -10,3 +10,18 @@
         }
     }
 }
+
+.function__row {
+    
+}
+
+.function__row:hover {
+    background-color: #00000045;
+    cursor: pointer;
+}
+
+.function__info {
+    border-bottom: 1px solid #111111;
+    margin: 24px 12px;
+    padding: 24px;
+}
