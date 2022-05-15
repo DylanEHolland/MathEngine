@@ -3,7 +3,7 @@ import { Functions } from "./Functions";
 import { SpreadSheet } from "./SpreadSheet";
 
 export const Application = () => {
-    const [screen, setScreen] = useState<number>(0);
+    const [screen, setScreen] = useState<number>(1);
 
     const displayScreen = () => {
         let output = (<>Loading</>);

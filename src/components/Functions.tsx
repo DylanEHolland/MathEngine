@@ -1,27 +1,100 @@
 import { InputBox } from "./InputBox";
 import "../styles/functions.scss";
+import { useEffect, useState } from "react";
+import Cookies from "universal-cookie";
 
 export const Functions = () => {
+    const [functions, setFunctions] = useState<any>({});
+    const [editing, setEditing] = useState<string|null>(null);
+    
+    const addFunction = (x: any, dropOldName?: string) => {
+        let replaceFunctions = {...functions};
+        replaceFunctions[x.name] = {
+            'parameters': x.parameters,
+            'action': x.action
+        };
+
+        if(dropOldName) {
+            delete replaceFunctions[dropOldName];
+        }
+
+        setFunctions(replaceFunctions);
+        setEditing(null);
+    }
+
+    useEffect(() => {
+        const cookies = new Cookies();
+        console.log("Loading functions...", cookies.get("functions"))
+        if(cookies.get("functions")) {
+            setFunctions(cookies.get("functions"));
+        }
+    }, [])
+
+    useEffect(() => {
+        const cookies = new Cookies();
+        if(Object.keys(functions).length > 0)
+            cookies.set("functions", JSON.stringify(functions));
+    }, [functions])
+
     return (
         <table className="functions__table">
-            <tr>
-                <th>Name</th>
-                <th>Parameters</th>
-                <th>Equation</th>
-                <th></th>
-            </tr>
-            <EditableFunction />
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Parameters</th>
+                    <th>Equation</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {
+                    functions && Object.keys(functions).length > 0 && Object.keys(functions).map(
+                        key => {
+                            return <Function addFunction={addFunction} name={key} data={functions[key]} editing={editing === key} setEditing={setEditing} />
+                        }
+                    )
+                }
+
+                {editing === null && <Function addFunction={addFunction} isNew />}
+            </tbody>
         </table>
     );
 }
 
-export const EditableFunction = () => {
+export const Function = ({addFunction, editing, setEditing, name, data, isNew = false}: {addFunction?: any; editing?: boolean; setEditing?: any; name?: any; data?: any; isNew?: boolean;}) => {
+    const [fnName, setFnName] = useState<any>(name);
+    const [parameters, setParameters] = useState<any>((data && data.parameters) || "");
+    const [action, setAction] = useState<any>((data && data.action) || "");
+
+    if( (!editing || !isNew) && !data ) return null;
+
     return (
         <tr>
-            <td><InputBox placeholder="f" /></td>
-            <td><InputBox placeholder="x, y" /></td>
-            <td><InputBox placeholder="x + y" /></td>
-            <td><button>Add</button></td>
+            {
+                (editing || isNew) ? (
+                    <>
+                        <td><InputBox initialValue={name} placeholder="f" onUpdate={setFnName} /></td>
+                        <td><InputBox initialValue={parameters} placeholder="x, y" onUpdate={setParameters} /></td>
+                        <td><InputBox initialValue={action} placeholder="x + y" onUpdate={setAction} /></td>
+                        <td><button onClick={
+                            () => {
+                                addFunction({
+                                    name: fnName,
+                                    parameters: parameters,
+                                    action: action
+                                }, name)
+                            }
+                        }>{isNew ? "Add" : "Update"}</button></td>
+                    </>
+                ) : name && (
+                    <>
+                        <td>{name}</td>
+                        <td>{data.parameters}</td>
+                        <td>{data.action}</td>
+                        <td><button onClick={() => setEditing(name)}>Edit</button></td>
+                    </>
+                )
+            }
         </tr>
     )
 }

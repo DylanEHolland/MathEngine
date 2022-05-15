@@ -2,11 +2,9 @@ import { useState } from "react";
 import { parseText } from "../lib/parser";
 import "../styles/input_box.scss";
 
-export const InputBox = ({placeholder, dynamic = false}: {placeholder?: string; dynamic?: boolean;}) => {
-    const [value, setValue] = useState<string>("");
+export const InputBox = ({placeholder, dynamic = false, onUpdate, initialValue}: {placeholder?: string; dynamic?: boolean; onUpdate?: any; initialValue?: any;}) => {
+    const [value, setValue] = useState<string>(initialValue ? initialValue : "");
     const [focused, setFocused] = useState<boolean>(false);
-
-    console.log("test:", value, parseText(value))
 
     return (dynamic && focused) ? (
         <input 
@@ -16,6 +14,8 @@ export const InputBox = ({placeholder, dynamic = false}: {placeholder?: string; 
             onChange={
                 (event: any) => {
                     setValue(event.target.value);
+                    if(onUpdate) 
+                        onUpdate(event.target.value)
                 }
             }
             onFocus={
@@ -47,6 +47,8 @@ export const InputBox = ({placeholder, dynamic = false}: {placeholder?: string; 
                 (event: any) => {
                     if(!dynamic)
                         setValue(event.target.value);
+                        if(onUpdate) 
+                            onUpdate(event.target.value)
                 }
             }
         />

@@ -1,3 +1,12 @@
 .functions__table {
     width: 100%;
+
+    tbody, thead {
+        tr {
+            td {
+                //border: 1px solid #111;
+                text-align: center;
+            }
+        }
+    }
 }
