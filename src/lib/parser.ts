@@ -79,7 +79,11 @@ export const runNode = (node: any) => {
 }
 
 export const parseParameters = (str: string) => {
-    return str.split(",")
+    return str.split(",").map(
+        it => {
+            return it.trim()
+        }
+    )
 }
 
 export const parseAction = (str: string) => {
@@ -114,7 +118,7 @@ export const parseExpr = (tokens: any) => {
                 if(character !== " ")
                     potentialStr += character;
                 
-                if( tokens[index + 1] && (tokens[index + 1] === " " || specialChars.includes(tokens[index + 1])) ) {
+                if(!tokens[index + 1] || (tokens[index + 1] === " " || specialChars.includes(tokens[index + 1])) ) {
                     nodes.push({
                         type: isNaN(parseFloat(potentialStr)) ? "VARIABLE" : "CONSTANT",
                         value: potentialStr
