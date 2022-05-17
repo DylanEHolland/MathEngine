@@ -1,5 +1,5 @@
 import { generateTestData } from "../lib/generator";
-import { parseAction, parseParameters } from "../lib/parser"
+import { parseAction, parseParameters, runFunction } from "../lib/parser"
 
 export const FunctionInfo = ({name, parameters, action}: {name: string, parameters: string, action: string}) => {
     return (
@@ -28,12 +28,13 @@ export const FunctionInfo = ({name, parameters, action}: {name: string, paramete
             <VisualizeFunction 
                 name={name}
                 parameters={parameters}
+                action={parseAction(action)}
             />
         </div>
     )
 }
 
-export const VisualizeFunction = ({table = true, name, parameters}: {table?: boolean; name: string; parameters: string}) => {
+export const VisualizeFunction = ({table = true, name, parameters, action}: {table?: boolean; name: string; parameters: string; action?: any;}) => {
     const parsedParameters = parseParameters(parameters);
     const parameterData = generateTestData(parsedParameters);
 
@@ -56,12 +57,7 @@ export const VisualizeFunction = ({table = true, name, parameters}: {table?: boo
                     {
                         parameterData.map(
                             (data: any, idx: number) => {
-                                return <VisualizeFunctionTableRow data={data} />
-                                // return data.map(
-                                //     (d: any) => {
-                                //         return <td>{d}</td>
-                                //     }
-                                // )
+                                return <VisualizeFunctionTableRow data={data} action={action} />
                             }
                         )
                     }
@@ -73,7 +69,7 @@ export const VisualizeFunction = ({table = true, name, parameters}: {table?: boo
     )
 }
 
-const VisualizeFunctionTableRow = ({data}: {data: any;}) => {
+const VisualizeFunctionTableRow = ({data, action}: {data: any; action: any;}) => {
     return (
         <tr>
             {Object.keys(data).map(
@@ -81,6 +77,7 @@ const VisualizeFunctionTableRow = ({data}: {data: any;}) => {
                     return <td>{data[k]}</td>
                 }
             )}
+            <td>{runFunction(action, data)}</td>
         </tr>
     )
 }

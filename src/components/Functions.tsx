@@ -2,7 +2,6 @@ import { InputBox } from "./InputBox";
 import "../styles/functions.scss";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
-import { parseAction, parseParameters } from "../lib/parser";
 import { FunctionInfo } from "./FunctionInfo";
 
 export const Functions = () => {
@@ -79,10 +78,6 @@ export const Function = ({addFunction, deleteFunction, editing, setEditing, name
     const [parameters, setParameters] = useState<any>((data && data.parameters) || "");
     const [action, setAction] = useState<any>((data && data.action) || "");
 
-    useEffect(() => {
-        console.log("Function:", editing)
-    })
-
     if(!isNew && !data) return null;
 
     return (
@@ -114,9 +109,9 @@ export const Function = ({addFunction, deleteFunction, editing, setEditing, name
                     ) : name && (
                         <>
                             <td>{name}</td>
-                            <td>{data.parameters}</td>
+                            <td>{"( "}{data.parameters}{" )"}</td>
                             <td>{data.action}</td>
-                            <td></td>
+                            <td><button>Edit</button></td>
                         </>
                     )
                 }

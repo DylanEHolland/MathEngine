@@ -4,7 +4,6 @@
     tbody, thead {
         tr {
             td {
-                //border: 1px solid #111;
                 text-align: center;
             }
         }
@@ -12,7 +11,9 @@
 }
 
 .function__row {
-    
+    td {
+        padding: 24px;
+    }
 }
 
 .function__row:hover {
@@ -43,7 +44,7 @@
 
 .function__visualize--table {
     margin-top: 32px;
-    
+
     table {
         width: 100%;
 
@@ -51,11 +52,15 @@
             tr {
                 td, th {
                     text-align: center;
+                    padding-bottom: 16px;
+                    padding-top: 8px;
                 }
 
                 th {
                     padding-bottom: 36px;
                 }
+
+                border-bottom: 1px solid #404040;
             }
         }
     }
