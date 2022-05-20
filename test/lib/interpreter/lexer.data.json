@@ -1,0 +1,14 @@
+{
+    "tokenizeParametersData": [
+        {
+            "input": "x, y",
+            "output": ["x", "y"]
+        }
+    ],
+    "tokenizeActionData": [
+        {
+            "input": null,
+            "output": null
+        }
+    ]
+}

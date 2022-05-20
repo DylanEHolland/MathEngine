@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { parseText } from "../lib/parser";
+//import { parseText } from "../lib/interpreter/parser";
 import "../styles/input_box.scss";
 
 export const InputBox = ({placeholder, dynamic = false, onUpdate, initialValue}: {placeholder?: string; dynamic?: boolean; onUpdate?: any; initialValue?: any;}) => {
@@ -39,10 +39,12 @@ export const InputBox = ({placeholder, dynamic = false, onUpdate, initialValue}:
                     setFocused(true);
                 }
             }
-            placeholder={!dynamic ? 
-                value.length > 0 ? value : placeholder
-                : parseText(value)}
-            value={!dynamic ? value : parseText(value)}
+            // placeholder={!dynamic ? 
+            //     value.length > 0 ? value : placeholder
+            //     : parseText(value)}
+            // value={!dynamic ? value : parseText(value)}
+            placeholder={placeholder}
+            value={value}
             onChange={
                 (event: any) => {
                     if(!dynamic)

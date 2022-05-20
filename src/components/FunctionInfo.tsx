@@ -1,5 +1,6 @@
 import { generateTestData } from "../lib/generator";
-import { parseAction, parseParameters, runFunction } from "../lib/parser"
+import {tokenizeAction, tokenizeParameters} from "../lib/interpreter/lexer";
+import { runFunction } from "../lib/interpreter/parser";
 
 export const FunctionInfo = ({name, parameters, action}: {name: string, parameters: string, action: string}) => {
     return (
@@ -10,7 +11,7 @@ export const FunctionInfo = ({name, parameters, action}: {name: string, paramete
                         <th>Parameters: </th>
                         <td>
                             <code>
-                                {JSON.stringify(parseParameters(parameters))}
+                                {JSON.stringify(tokenizeParameters(parameters))}
                             </code>                            
                         </td>
                     </tr>
@@ -18,7 +19,7 @@ export const FunctionInfo = ({name, parameters, action}: {name: string, paramete
                         <th>Action: </th>
                         <td>
                             <code>
-                                {JSON.stringify(parseAction(action))}
+                                {JSON.stringify(tokenizeAction(action))}
                             </code>                            
                         </td>
                     </tr>
@@ -28,14 +29,14 @@ export const FunctionInfo = ({name, parameters, action}: {name: string, paramete
             <VisualizeFunction 
                 name={name}
                 parameters={parameters}
-                action={parseAction(action)}
+                action={tokenizeAction(action)}
             />
         </div>
     )
 }
 
 export const VisualizeFunction = ({table = true, name, parameters, action}: {table?: boolean; name: string; parameters: string; action?: any;}) => {
-    const parsedParameters = parseParameters(parameters);
+    const parsedParameters = tokenizeParameters(parameters);
     const parameterData = generateTestData(parsedParameters);
 
     return table ? (
