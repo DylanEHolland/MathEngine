@@ -1,4 +1,4 @@
-import { InputBox } from "../Layout/InputBox";
+import { Input } from "../Layout/Input";
 import "../../styles/functions.scss";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
@@ -93,9 +93,9 @@ export const Function = ({addFunction, deleteFunction, editing, setEditing, name
                 {
                     (editing || isNew) ? (
                         <>
-                            <td><InputBox initialValue={name} placeholder="f" onUpdate={setFnName} /></td>
-                            <td><InputBox initialValue={parameters} placeholder="x, y" onUpdate={setParameters} /></td>
-                            <td><InputBox initialValue={action} placeholder="x + y" onUpdate={setAction} /></td>
+                            <td><Input initialValue={name} placeholder="f" onUpdate={setFnName} /></td>
+                            <td><Input initialValue={parameters} placeholder="x, y" onUpdate={setParameters} /></td>
+                            <td><Input initialValue={action} placeholder="x + y" onUpdate={setAction} /></td>
                             <td><button onClick={
                                 () => {
                                     addFunction({

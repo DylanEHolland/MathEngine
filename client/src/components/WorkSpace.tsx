@@ -1,11 +1,16 @@
-import { useState } from "react";
-//import { Functions } from "./Functions";
-import '../styles/workspace.scss';
+import { useEffect, useState } from "react";
 import { Button } from "./Layout/Button";
 import { Functions } from "./MathEngine/Functions";
 
+import '../styles/workspace.scss';
+import '../styles/layout.scss';
+
 export const WorkSpace = () => {
     const [screen, setScreen] = useState<number>(1);
+
+    useEffect(() => {
+        console.log("screen:", screen)
+    })
 
     return (
         <>
@@ -13,13 +18,21 @@ export const WorkSpace = () => {
                 screen={screen} 
                 setScreen={setScreen}
             />
+            <div className="main__content">
+                <WorkSpaceScreen 
+                    screen={screen}
+                />
+            </div>
         </>
     )
 }
 
 export const WorkSpaceHeaderButton = ({children, onClick, selected}: {children: any; onClick: any; selected: boolean}) => {
     return (
-        <Button className={`workspace__header--btn${selected ? "-selected" : ""}`}>
+        <Button 
+            className={`workspace__header--btn${selected ? "-selected" : ""}`}
+            onClick={onClick}
+        >
             {children}
         </Button>
     )
@@ -29,19 +42,25 @@ export const WorkSpaceHeader = ({screen, setScreen}: {screen: number, setScreen:
     return (
         <div className="workspace__header">
             <WorkSpaceHeaderButton
-                onClick={() => {}}
+                onClick={() => {
+                    setScreen(0);
+                }}
                 selected={screen === 0}
             >
                 Work
             </WorkSpaceHeaderButton>
             <WorkSpaceHeaderButton
-                onClick={() => {}}
+                onClick={() => {
+                    setScreen(1);
+                }}
                 selected={screen === 1}
             >
                 Functions
             </WorkSpaceHeaderButton>
             <WorkSpaceHeaderButton
-                onClick={() => {}}
+                onClick={() => {
+                    setScreen(2);
+                }}
                 selected={screen === 2}
             >
                 Constants
@@ -52,21 +71,25 @@ export const WorkSpaceHeader = ({screen, setScreen}: {screen: number, setScreen:
 
 export const WorkSpaceScreen = ({screen}: {screen: number}) => {
     const displayScreen = () => {
-        let output = (<></>);
+        let output = null;
         switch(screen) {
             case 0:
 
             break;
 
             case 1:
-                output = <Functions />
+                output = <Functions />;
             break;
         }
+
+        return output;
     } 
 
-    return (
-        <>
+    let currentScreen = displayScreen();
 
-        </>
+    return currentScreen && (
+        <div className="workspace__screen">
+            {currentScreen}
+        </div>
     )
 }
