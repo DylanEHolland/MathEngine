@@ -1,54 +1,40 @@
-import * as testData from './parser.data.json';
-import {parseFunction} from '../../../src/lib/interpreter/parser'
+import {parseFunction, runFunction} from '../../../src/lib/interpreter/parser'
 import { tokenizeAction } from '../../../src/lib/interpreter/lexer';
+import { out } from '../../../src/lib/helpers';
+import { parseFunctionData, runFunctionData } from '../../data/lib/interpreter/parser.data';
 
-const {
-    parseData,
-    runFunctionData,
-    parseFunctionData
-} = testData;
-
-// test(
-//     "parseText",
-//     () => {
-//         for(const i in parseData) {
-//             const {input, output} = parseData[i];
-//             expect(parseText(input)).toBe(output);
-//         }
-        
-//     }
-// )
 
 test(
     "parseFunction",
     () => {
+        out("parseFunction");
+
         for(const index in parseFunctionData) {
             const row = parseFunctionData[index];
-            const {input: fnInput, output} = row;
-            const {action, input } = fnInput
+            const {input, output} = row;
+            const {action, parameters} = input;
+            const result = parseFunction(tokenizeAction(action), parameters);
 
-            const parsed = parseFunction(
-                tokenizeAction(action),
-                input
-            )
-
-            expect(parsed).toEqual(output);
+            out("-> result:", result);
+            expect(result).toEqual(output);
         }
     }
 )
 
-// test(
-//     "runFunction",
-//     () => {
-//         for(const index in runFunctionData) {
-//             const row = runFunctionData[index];
-//             const {input: fnInput, output} = row;
-//             const {parameters, action, input } = fnInput
+test(
+    "runFunction",
+    () => {
+        out("runFunction");
 
-//             runFunction(
-//                 tokenizeAction(action),
-//                 input
-//             )
-//         }
-//     }
-// )
+        for(const index in runFunctionData) {
+            const row = runFunctionData[index];
+            const {input: fnInput, output} = row;
+            const {action, parameters } = fnInput
+            let result = runFunction(tokenizeAction(action), parameters);
+            
+            out("-> result:", result);
+            expect(result).toEqual(output);
+        }
+    }
+)
+

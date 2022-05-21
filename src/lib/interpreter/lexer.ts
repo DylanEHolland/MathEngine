@@ -33,7 +33,7 @@ export const lexExpr = (tokens: any) => {
         } else {
             if(arithmeticOperators.includes(character)) {
                 nodes.push({
-                    type: "SPECIAL",
+                    type: "OPERATOR",
                     value: character
                 })
             } else {
@@ -43,7 +43,7 @@ export const lexExpr = (tokens: any) => {
                 if(!tokens[index + 1] || (tokens[index + 1] === " " || arithmeticOperators.includes(tokens[index + 1])) ) {
                     nodes.push({
                         type: isNaN(parseFloat(potentialStr)) ? "VARIABLE" : "CONSTANT",
-                        value: potentialStr
+                        value: isNaN(parseFloat(potentialStr)) ? potentialStr : Number(potentialStr)
                     })
 
                     potentialStr = '';
