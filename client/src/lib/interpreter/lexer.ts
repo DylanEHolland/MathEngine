@@ -1,6 +1,10 @@
 import { arithmeticOperators } from "./common";
 
 export const tokenizeParameters = (str: string) => {
+    /* 
+        Take a string with function parameters (e.g. x, y),
+    */
+
     return str.split(",").map(
         it => {
             return it.trim()
