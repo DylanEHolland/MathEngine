@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { InputBox } from "./InputBox"
+import { InputBox } from "../Layout/InputBox"
 import "../styles/spread_sheet.scss"
 
 function nextLetter(s: any){

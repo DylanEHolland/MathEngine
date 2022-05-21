@@ -1,5 +1,5 @@
-import { InputBox } from "./InputBox";
-import "../styles/functions.scss";
+import { InputBox } from "../Layout/InputBox";
+import "../../styles/functions.scss";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { FunctionInfo } from "./FunctionInfo";

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { Application } from './components/Application';
+import { WorkSpace } from './components/WorkSpace';
 import { AppWrapper } from './components/AppWrapper';
 
 const root = ReactDOM.createRoot(
@@ -10,7 +10,7 @@ root.render(
 
   <React.StrictMode>
     <AppWrapper>
-      <Application />
+      <WorkSpace />
     </AppWrapper>
   </React.StrictMode>
 );
