@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { InputBox } from "./InputBox"
+import { Input } from "../Layout/Input"
 import "../styles/spread_sheet.scss"
 
 function nextLetter(s: any){
@@ -94,7 +94,7 @@ const SpreadSheetRow = ({data, id}: {data: any, id: number}) => {
 const SpreadSheetColumn = ({}: {}) => {
     return (
         <td>
-            <InputBox 
+            <Input 
                 dynamic={true}
             />
         </td>

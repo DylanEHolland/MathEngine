@@ -1,0 +1,28 @@
+.workspace__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    background-color: #FFFFFF;
+    width: 100%;
+    padding: 36px;
+}
+
+.workspace__header--btn {
+    
+}
+
+.workspace__header--btn-selected {
+    background-color: transparent;
+}
+
+.workspace__screen {
+    background-color: #FFFFFF;
+    border-radius: 4px;
+    padding: 24px;
+    border: 1px solid #404040;
+}
+
+.main__content {
+    padding-top: 90px;
+}

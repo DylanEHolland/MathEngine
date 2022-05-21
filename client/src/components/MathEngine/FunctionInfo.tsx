@@ -1,6 +1,6 @@
-import { generateTestData } from "../lib/generator";
-import {tokenizeAction, tokenizeParameters} from "../lib/interpreter/lexer";
-import { runFunction } from "../lib/interpreter/parser";
+import { generateTestData } from "../../lib/generator";
+import {tokenizeAction, tokenizeParameters} from "../../lib/interpreter/lexer";
+import { runFunction } from "../../lib/interpreter/parser";
 
 export const FunctionInfo = ({name, parameters, action}: {name: string, parameters: string, action: string}) => {
     return (

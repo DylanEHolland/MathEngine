@@ -1,8 +1,8 @@
 import { useState } from "react";
 //import { parseText } from "../lib/interpreter/parser";
-import "../styles/input_box.scss";
+import "../../styles/input_box.scss";
 
-export const InputBox = ({placeholder, dynamic = false, onUpdate, initialValue}: {placeholder?: string; dynamic?: boolean; onUpdate?: any; initialValue?: any;}) => {
+export const Input = ({placeholder, dynamic = false, onUpdate, initialValue}: {placeholder?: string; dynamic?: boolean; onUpdate?: any; initialValue?: any;}) => {
     const [value, setValue] = useState<string>(initialValue ? initialValue : "");
     const [focused, setFocused] = useState<boolean>(false);
 
