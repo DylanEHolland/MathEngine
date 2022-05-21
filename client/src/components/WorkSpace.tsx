@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "./Layout/Button";
-import { Functions } from "./MathEngine/Functions";
+import { Functions } from "./LogicEngine/Functions";
 
 import '../styles/workspace.scss';
 import '../styles/layout.scss';
@@ -47,7 +47,7 @@ export const WorkSpaceHeader = ({screen, setScreen}: {screen: number, setScreen:
                 }}
                 selected={screen === 0}
             >
-                Work
+                Research
             </WorkSpaceHeaderButton>
             <WorkSpaceHeaderButton
                 onClick={() => {
@@ -55,15 +55,7 @@ export const WorkSpaceHeader = ({screen, setScreen}: {screen: number, setScreen:
                 }}
                 selected={screen === 1}
             >
-                Functions
-            </WorkSpaceHeaderButton>
-            <WorkSpaceHeaderButton
-                onClick={() => {
-                    setScreen(2);
-                }}
-                selected={screen === 2}
-            >
-                Constants
+                Knowledge
             </WorkSpaceHeaderButton>
         </div>
     )
