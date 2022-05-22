@@ -1,10 +1,8 @@
 import { useState } from "react";
 import { Button } from "./Layout/Button";
-import { Functions } from "./LogicEngine/Functions";
-
 import '../styles/workspace.scss';
 import '../styles/layout.scss';
-import {Research} from './Spaces/Research';
+import Research from './Spaces/Research';
 import Knowledge from "./Spaces/Knowledge";
 
 export const WorkSpace = () => {
