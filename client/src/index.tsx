@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { WorkSpace } from './components/WorkSpace';
-import { AppWrapper } from './components/AppWrapper';
+import { Work } from './components/Spaces/Work';
+import { Application } from './components/Application';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(
 root.render(
 
   <React.StrictMode>
-    <AppWrapper>
-      <WorkSpace />
-    </AppWrapper>
+    <Application>
+      <Work />
+    </Application>
   </React.StrictMode>
 );
