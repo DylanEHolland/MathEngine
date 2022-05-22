@@ -1,7 +1,19 @@
 import React from "react";
 import '../../styles/data_object.scss';
 
-export default class DataObject extends React.Component {
+export interface DataObjectState {
+
+};
+
+export interface DataObjectProps {
+    value?: any;
+};
+
+const defaultProps: DataObjectProps = {
+    value: null
+};
+
+export default class DataObject extends React.Component<{}: {}> {
     state = {
         value: null,
         softwareType: null,

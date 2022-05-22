@@ -3,12 +3,14 @@ import DataObject from "./DataObject";
 
 const defaultProps = {
     objects: null,
-    orderedObjects: null
+    orderedObjects: null,
+    parent: false
 }
 
 export interface CollectionState {
     objects: any;
     orderedObjects: any;
+    functions: any;
 };
 
 export interface CollectionProps {
@@ -21,7 +23,10 @@ export interface CollectionProps {
 export default class Collection extends React.Component<CollectionProps, CollectionState> {
     state = {
         objects: null,
-        orderedObjects: null
+        orderedObjects: null,
+        name: null,
+        functions: null,
+        parent: null
     };
 
     componentDidMount() {
@@ -43,7 +48,3 @@ export default class Collection extends React.Component<CollectionProps, Collect
         );
     }
 }
-
-const parseIncomingProps = (setState: any, defaultProps: any, props: any) => {
-
-} 
