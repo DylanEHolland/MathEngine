@@ -1,16 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Layout/Button";
 import { Functions } from "./LogicEngine/Functions";
 
 import '../styles/workspace.scss';
 import '../styles/layout.scss';
+import {Research} from './Spaces/Research';
+import Knowledge from "./Spaces/Knowledge";
 
 export const WorkSpace = () => {
-    const [screen, setScreen] = useState<number>(1);
-
-    useEffect(() => {
-        console.log("screen:", screen)
-    })
+    const [screen, setScreen] = useState<number>(0);
 
     return (
         <>
@@ -66,11 +64,11 @@ export const WorkSpaceScreen = ({screen}: {screen: number}) => {
         let output = null;
         switch(screen) {
             case 0:
-
+                output = <Research />
             break;
 
             case 1:
-                output = <Functions />;
+                output = <Knowledge />;
             break;
         }
 
