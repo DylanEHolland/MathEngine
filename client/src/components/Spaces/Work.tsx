@@ -1,12 +1,16 @@
 import { useState } from "react";
-import { Button } from "./Layout/Button";
-import '../styles/workspace.scss';
-import '../styles/layout.scss';
-import Research from './Spaces/Research';
-import Knowledge from "./Spaces/Knowledge";
+import { Button } from "../Button";
+import '../../styles/workspace.scss';
+import '../../styles/layout.scss';
+import Research from './Research';
+import Knowledge from "./Knowledge";
 
-export const WorkSpace = () => {
+export const Work = () => {
     const [screen, setScreen] = useState<number>(0);
+    const [objects, setObjects] = useState<any>({});
+    const [focusedObject, setFocusedObject] = useState<string|null>(null);
+
+    
 
     return (
         <>

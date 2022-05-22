@@ -1,4 +1,4 @@
-import { Input } from "../Layout/Input";
+import { Input } from "../Input";
 import "../../styles/functions.scss";
 import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
