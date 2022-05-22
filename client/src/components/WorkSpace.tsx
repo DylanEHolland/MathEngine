@@ -1,16 +1,12 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Layout/Button";
-import { Functions } from "./MathEngine/Functions";
-
 import '../styles/workspace.scss';
 import '../styles/layout.scss';
+import Research from './Spaces/Research';
+import Knowledge from "./Spaces/Knowledge";
 
 export const WorkSpace = () => {
-    const [screen, setScreen] = useState<number>(1);
-
-    useEffect(() => {
-        console.log("screen:", screen)
-    })
+    const [screen, setScreen] = useState<number>(0);
 
     return (
         <>
@@ -47,7 +43,7 @@ export const WorkSpaceHeader = ({screen, setScreen}: {screen: number, setScreen:
                 }}
                 selected={screen === 0}
             >
-                Work
+                Research
             </WorkSpaceHeaderButton>
             <WorkSpaceHeaderButton
                 onClick={() => {
@@ -55,15 +51,7 @@ export const WorkSpaceHeader = ({screen, setScreen}: {screen: number, setScreen:
                 }}
                 selected={screen === 1}
             >
-                Functions
-            </WorkSpaceHeaderButton>
-            <WorkSpaceHeaderButton
-                onClick={() => {
-                    setScreen(2);
-                }}
-                selected={screen === 2}
-            >
-                Constants
+                Knowledge
             </WorkSpaceHeaderButton>
         </div>
     )
@@ -74,11 +62,11 @@ export const WorkSpaceScreen = ({screen}: {screen: number}) => {
         let output = null;
         switch(screen) {
             case 0:
-
+                output = <Research />
             break;
 
             case 1:
-                output = <Functions />;
+                output = <Knowledge />;
             break;
         }
 
