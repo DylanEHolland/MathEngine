@@ -1,0 +1,2 @@
+
+Disclaimer: This is a temporary documentation mechanism until we get further along in development at which point documentation should take place within the application itself.  I'm expecting this to increase the documentation in its scope and accuracy, but I also need to copy over stuff from commits and trello tickets that I typed out while specing the initial system.  
